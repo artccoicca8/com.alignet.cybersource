@@ -23,6 +23,7 @@ import com.cybersource.schemas.transaction.data.RequestMessage;
 import com.cybersource.schemas.transaction.data.transactionprocessor.ITransactionProcessor;
 import com.cybersource.schemas.transaction.data.transactionprocessor.TransactionProcessor;
 import com.cybersource.schemas.transaction.data.transactionprocessor.callback.UTPasswordCallback;
+import com.cybersource.schemas.transaction.data.util.Constants;
 
 public class ReadyFready {
 	private static final Logger logger = LoggerFactory.getLogger(ReadyFready.class);
@@ -41,18 +42,18 @@ public class ReadyFready {
 		props.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
 		props.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
 		props.put(WSHandlerConstants.PW_CALLBACK_CLASS, UTPasswordCallback.class.getName());
-		props.put(WSHandlerConstants.USER, "ripley_pe");
+		props.put(WSHandlerConstants.USER, Constants.TRANSACTION_USER);
 
 		WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(props);
 		endpoint.getOutInterceptors().add(wssOut);
 
 		RequestMessage request = new RequestMessage();
 
-		request.setMerchantID("ripley_pe");
+		request.setMerchantID(Constants.TRANSACTION_MERCHANT_ID);
 
 		// Before using this example, replace the generic value with
 		// your reference number for the current transaction.
-		request.setMerchantReferenceCode("111122561");
+		request.setMerchantReferenceCode(Constants.TRANSACTION_REFERENCE_CODE);
 
 		// To help us troubleshoot any problems that you may encounter,
 		// please include the following information about your application.
