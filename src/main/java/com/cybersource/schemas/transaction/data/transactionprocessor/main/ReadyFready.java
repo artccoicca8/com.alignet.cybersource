@@ -3,7 +3,10 @@ package com.cybersource.schemas.transaction.data.transactionprocessor.main;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import javax.xml.namespace.QName;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.frontend.ClientProxy;
@@ -28,13 +31,18 @@ import com.cybersource.schemas.transaction.data.util.Constants;
 public class ReadyFready {
 	private static final Logger logger = LoggerFactory.getLogger(ReadyFready.class);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MalformedURLException {
 
 		logger.info(" ******** Iniciando el consumo ************");
 
-		TransactionProcessor processor = new TransactionProcessor();
+		URL url = new URL(Constants.TRANSACTION_URL_CYBER);
+		QName qname = new QName("urn:schemas-cybersource-com:transaction-data:TransactionProcessor",
+				"TransactionProcessor");
+
+		TransactionProcessor processor = new TransactionProcessor(url, qname);
+//		TransactionProcessor processor = new TransactionProcessor();
 		ITransactionProcessor transactionProcessor = processor.getPortXML();
-		
+
 		Client client = ClientProxy.getClient(transactionProcessor);
 		Endpoint endpoint = client.getEndpoint();
 
